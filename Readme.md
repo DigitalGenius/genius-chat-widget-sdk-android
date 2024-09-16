@@ -222,6 +222,43 @@ useEffect(() => {
 ...
 ```
 
+
+# Launch chat from an external element
+To trigger the chat widget to launch from some external element in your application (i.e. An “Chat with us“ button), call ``launchWidget()`` function inside ``onWidgetEmbedded()`` callback. 
+```Kotlin
+	var methods: DGChatMethods? = null
+
+	val dgChatView = findViewById<DGChatView>(R.id.straight_dgchatview)
+	dgChatView.chatWidgetListener = object : IDGChatWidgetListener{
+    	override fun onChatInitialised() {
+		}
+
+		override fun onWidgetEmbedded() {
+			// Must be run on main thread
+			runOnUiThread{
+				methods?.launchWidget()
+			}
+		}
+		
+		override fun onCSATPopoverCloseClicked() {
+		}
+		
+		override fun onChatEndClick() {
+		}
+		
+		override fun onChatLauncherClick() {
+		}
+		
+		override fun onChatMinimizeClick() {
+		}
+		
+		override fun onChatProactiveButtonClick() {
+		}
+	}
+	methods = dgChatView.show() 
+
+```
+
 # Full screen support
 There are two methods to display your chat in full-screen mode:
 ### 1. Customize Activity Styles via xml config
