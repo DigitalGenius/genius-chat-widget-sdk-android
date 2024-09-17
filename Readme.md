@@ -183,167 +183,98 @@ You can use config to customise your chat widget style. Eg: floating button posi
 
 ## Additional Methods
 
-<!--START OF ANDROID CONVERT NEEDED-->
-
-You can use a set of additional methods to interact directly with Chat Widget. These methods are lised as a part of ``DGChat`` instance.
+You can use a set of additional methods to interact directly with Chat Widget. These methods are lised as a part of ``DGChatMethods`` instance.
 
 The `sendMessage` method allows the customer to programmatically send a message on the user behalf. This method is not available once the user is handed over to a crm:
 
-```swift
-func sendMessage(_ message: String, completion: @escaping (Result<Void, Error>) -> Void)
-
-func sendMessage(_ message: String) async throws
+```Kotlin
+fun sendMessage(message: String)
 ```
 
 The `launchWidget` method allows the customer to programmatically launch the widget:
 
-```swift
-func launchWidget(_ completion: @escaping (Result<Void, Error>) -> Void)
-
-func launchWidget() async throws
+```Kotlin
+func launchWidget()
 ```
 
 The `initProactiveButtons` method allows the customer to programmatically trigger the proactive buttons to display:
 
-```swift
-func initProactiveButtons(values: String, completion: @escaping (Result<Void, Error>) -> Void)
-
-func initProactiveButtons(values: String) async throws
+```Kotlin
+func initProactiveButtons(questions: List<String>, answers: List<String>)
 ```
 
 The `minimizeWidget` method allows customer to minimise an expanded chat UI to the "launcher" state programmatically:
 
-```swift
-func minimizeWidget(_ completion: @escaping (Result<Void, Error>) -> Void)
-
-func minimizeWidget() async throws
+```Kotlin
+func minimizeWidget()
 ```
-<!--END OF ANDROID CONVERT NEEDED-->
 
 See [full methods list](https://docs.digitalgenius.com/docs/methods) for more details.
 
 ## Launch chat from an external element
-<!--CONVERT TO ANDROID NEEDED-->
-If you prefer to launch the chat widget from your UI element (eg: UIButton) rather than using the default SDK launcher, follow these steps:
+
+If you prefer to launch the chat widget from your UI element (eg: An “Chat with us“ button) rather than using the default SDK launcher, follow these steps:
 1. Hide the launcher with this custome config from chat delegate
-You can hide the default launcher button by adding the following configuration inside  ``DGChatDelegate.configs``
+You can hide the default launcher button by adding the following configuration inside  ``DGChatSdk.init(configs)``
 ```
-var configs: [String : Any]? {
-     ["generalSettings": ["isChatLauncherEnabled": false]]
- }
+var configs = mapOf(Pair("generalSettings", mapOf(Pair("isChatLauncherEnabled", true))))
 ```
 
 2. Initialize the Chat SDK
-Initialize the chat SDK by calling the DGChat.added(to:) function. Then, set the delegate for the SDK by calling DGChat.delegate. To listen for the DGChatAction.onWidgetEmbedded event, implement the DGChatDelegate.didTrack(action:) method. 
+Initialize the chat SDK by calling the DGChatSdk.init() function. Then adding ``methods.launchWidget()`` inside ``onWidgetEmbedded()`` callbacks. 
 
 4. Manually Launch the Chat Widget
-After the SDK is successfully embedded in your application, you can manually launch the chat widget by calling the ``expandWidget(_ completion:)`` function attach to your
+After the SDK is successfully embedded in your application, you can manually launch the chat widget by calling the ``methods.launchWidget()`` function.
 
 Below is a complete example of how to configure the SDK to manually launch the chat widget
-```swift
-class ChatViewController: UIViewController, DGChatDelegate {
-    
-    // Lazy var UIButton with title 'Chat with us'
-    lazy var chatButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Chat with us", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        // Add action to button for touchUpInside event
-        button.addTarget(self, action: #selector(chatButtonTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Set up Chat
-        DGChat.delegate = self
-        DGChat.added(to: self) { chatView in
-            print("DGChatView is presented now with frame \(chatView.frame)")
+```Kotlin
+class DirectActivity : AppCompatActivity() {
+    var methods: DGChatMethods? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_straight)
+        DGChatSdk.init(
+            "your_widget_id",
+            "your_env",
+            true,
+            configs = mapOf(
+                Pair("generalSettings", mapOf(Pair("isChatLauncherEnabled", true))),
+            )
+        )
+
+        val dgChatView = findViewById<DGChatView>(R.id.straight_dgchatview)
+        dgChatView.chatWidgetListener = object : IDGChatWidgetListener {
+            override fun onChatInitialised() {
+            }
+
+            override fun onWidgetEmbedded() {
+                // Must be run on main thread
+                runOnUiThread {
+                    methods?.launchWidget()
+                }
+            }
+
+            override fun onCSATPopoverCloseClicked() {
+            }
+
+            override fun onChatEndClick() {
+            }
+
+            override fun onChatLauncherClick() {
+            }
+
+            override fun onChatMinimizeClick() {
+            }
+
+            override fun onChatProactiveButtonClick() {
+            }
+
         }
 
-        // Add the button to the view hierarchy
-        view.addSubview(chatButton)
-        chatButton.isEnabled = false
-        // Set up button constraints (bottom and trailing)
-        NSLayoutConstraint.activate([
-            chatButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            chatButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
-            chatButton.widthAnchor.constraint(equalToConstant: 150),
-            chatButton.heightAnchor.constraint(equalToConstant: 50)
-        ])
-    }
-    
-    // Action function for the button
-    @objc func chatButtonTapped() {
-        DGChat.expandWidget { result in
-            // handle result
-        }
-    }
-    
-
-    // MARK: - DGChatDelegate
-    func didTrack(action: DGChatSDK.DGChatAction) {
-        switch action {
-        case .onWidgetEmbedded:
-            chatButton.isEnabled = true
-        default:
-            break
-        }
-        print("Action track:", action)
-    }
-    
-    func didFailWith(error: Error) {
-        // SDK got error
-    }
-    
-    var widgetId: String {
-        // Client identifier (Widget Identifier) provided by vendor company.
-    }
-    
-    var env: String {
-        // Environment value provided by vendor company.
-    }
-    
-    var configs: [String : Any]? {
-        ["generalSettings": ["isChatLauncherEnabled": false]]
+        methods = dgChatView.show()
     }
 }
 ```
-To trigger the chat widget to launch from some external element in your application (i.e. An “Chat with us“ button), call ``launchWidget()`` function inside ``onWidgetEmbedded()`` callback. 
-```Kotlin
-	var methods: DGChatMethods? = null
-
-	val dgChatView = findViewById<DGChatView>(R.id.straight_dgchatview)
-	dgChatView.chatWidgetListener = object : IDGChatWidgetListener{
-    	override fun onChatInitialised() {
-		}
-
-		override fun onWidgetEmbedded() {
-			// Must be run on main thread
-			runOnUiThread{
-				methods?.launchWidget()
-			}
-		}
-		
-		override fun onCSATPopoverCloseClicked() {
-		}
-		
-		override fun onChatEndClick() {
-		}
-		
-		override fun onChatLauncherClick() {
-		}
-		
-		override fun onChatMinimizeClick() {
-		}
-		
-		override fun onChatProactiveButtonClick() {
-		}
-	}
-	methods = dgChatView.show() 
-
-```
-<!--CONVERT TO ANDROID NEEDED END-->
 
 # Full screen support
 There are two methods to display your chat in full-screen mode:
@@ -403,32 +334,19 @@ Screenshot:
 
 ## Sample project
 
-<!--CONVERT TO ANDROID NEEDED-->
 The interaction model and example usage can be found in Demo project. Refer to the `MainActivity.kt` file.
 
-Project UI root is UITabBarController which holds few UIViewControllers. Each one represents a particular way of DGChatSDK usage. 
+Project UI root activity is MainActivity which contains buttons reference to other activities:
 
-`ManualCallController.swift` - demonstrates a step-by-step call of DGChatSDK from user-defined UI.
+`StraightActivity.kt` - can be useful example for those cases, when you need to present Chat Widget during view presentation process.
 
-`StraightForwardController.swift` - can be useful example for those cases, when you need to present Chat Widget during view presentation process.
+`DirectActivity.kt` - launch the chat up on openning this screen. 
 
-`CustomAnimationController.swift` - provides an example of custom animation added to presentation/dismissal process of Chat Widget. 
+`EmbeddedActivity.kt` - demonstrates a step-by-step call of DGChatSDK from user-defined UI.
 
-`NavigationCallController.swift` - gives an idea on how to keep DGChat widget running across different ViewControllers pushed to the stack.
+`NavigationActivity.kt` - provides an example of handling fragment navigation with chat widget. 
 
-💭 Please note, that in each call of:
-
-```swift
-func added(to: UIViewController, animated: Bool, completion: ((UIView) -> Void)?)
-```
-
-is that completion closure produces UIView object which is a reference to an overlay view used by DGChat SDK to represent all needed information. 
-
-> **You can use that reference to show, hide, move, adjust size and perform any other actions available for UIView to adjust DGChat's placement, appearance and etc. according to your needs and your particular project.**
-
-Example on how that UIView can be manipulated can be found in `CustomAnimationController.swift`.  
-
-<!--CONVERT TO ANDROID NEEDED END-->
+`FragmentActivityExample.kt` - gives an example of adding chat widget to a Fragment. 
 
 
 # React-native
