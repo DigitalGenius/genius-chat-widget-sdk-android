@@ -1,6 +1,10 @@
-# Module chatwidgetsdk
-
 # ``DGChatSDK``
+
+<div align="center">
+   <img width="600px" src="./docs/images/logo-dark-dg.svg" alt="Logo">
+</div>
+
+<!--![DigitalGeniusLogo](logo-dark.svg)-->
 
 Android SDK for DigitalGenius Chat.
 
