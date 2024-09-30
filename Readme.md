@@ -21,7 +21,7 @@ Please see the `Integrating SDK to your project` section for details on how to i
 2. Add to your build gradle file:
     ```Groovy
     dependencies {
-        implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+	    implementation(files('./libs/chatwidgetsdk.aar'))
     }
     ```
 3. Put `DGChatSDK.aar` into your `project/module/libs` folder.
@@ -430,7 +430,7 @@ Project UI root activity is MainActivity which contains buttons reference to oth
 2. Add to your build gradle file:
     ```Groovy
     dependencies {
-        implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+	    implementation(files('./libs/chatwidgetsdk.aar'))
         implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
         implementation("androidx.compose.runtime:runtime:1.4.3")
     }

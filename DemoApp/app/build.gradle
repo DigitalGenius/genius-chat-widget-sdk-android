@@ -42,9 +42,7 @@ dependencies {
 
     implementation 'androidx.activity:activity:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    dependencies {
-        implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
-    }
+    implementation(files('./libs/chatwidgetsdk.aar'))
     implementation 'androidx.activity:activity-compose:1.7.2'
 
 
