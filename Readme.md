@@ -263,6 +263,13 @@ The sendSystemMessage method allows the customer to programmatically send a mess
 ```Kotlin
 fun sendSystemMessage(payload: Map<String, Any>)
 ```
+For example:
+```Kotlin
+sendSystemMessage(buildMap{
+    put("name", "auth_token")
+    put("payload", "your_jwt_token")
+})
+```
 
 The `launchWidget` method allows the customer to programmatically launch the widget:
 
