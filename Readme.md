@@ -16,7 +16,7 @@ A DigitalGenius Customer Success Manager will provide you with a custom `widgetI
 Please see the `Integrating SDK to your project` section for details on how to integrate the following settings into an Android app using the SDK.
 
 ## Installation
-
+### Manually import aar file
 1. Extract the provided `chatwidgetsdk` zip.
 2. Add to your build gradle file:
     ```Groovy
@@ -27,6 +27,21 @@ Please see the `Integrating SDK to your project` section for details on how to i
 3. Put `DGChatSDK.aar` into your `project/module/libs` folder.
 4. Click `Sync Project with Gradle files` in Android Studio
 
+### Maven repository
+1. Add jitpack.io in your repositories
+   ```Groovy
+   repositories {
+      google()
+      mavenCentral()
+      maven { url 'https://jitpack.io' }
+   }
+   ```
+2. Add chat sdk to your dependencies
+   ```Groovy
+   dependencies {
+        implementation 'com.github.DigitalGenius:genius-chat-widget-sdk-android:lastest_release'
+   }
+   ```
 
 ## Basic usage
 1. Add ``DGChatView`` into your layout
