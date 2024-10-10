@@ -88,6 +88,10 @@ class MainActivity : AppCompatActivity() {
                 override fun onChatInitialised() {
 
                 }
+
+                override fun onChatInitialisedError() {
+
+                }
             },
             configs = mapOf(
                 Pair(
