@@ -19,9 +19,7 @@ class DirectActivity: AppCompatActivity() {
 
             override fun onWidgetEmbedded() {
                 // Must be run on main thread
-                runOnUiThread{
-                    methods?.launchWidget()
-                }
+                methods?.launchWidget()
             }
 
             override fun onCSATPopoverCloseClicked() {
