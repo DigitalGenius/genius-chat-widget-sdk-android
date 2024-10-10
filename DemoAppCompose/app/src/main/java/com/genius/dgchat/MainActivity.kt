@@ -9,24 +9,16 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContent
-import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,8 +29,6 @@ import com.digitalgenius.chatwidgetsdk.interactions.IDGChatWidgetListener
 import com.digitalgenius.chatwidgetsdk.ui.compose.DGChatView
 import com.digitalgenius.chatwidgetsdk.ui.compose.showDGChatViewWith
 import com.genius.dgchat.ui.theme.DemoAppComposeTheme
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -91,11 +81,27 @@ class MainActivity : ComponentActivity() {
                 }
 
                 override fun onChatInitialised() {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Chat callback -> onChatInitialised",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
 
+                override fun onChatInitialisedError() {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Chat callback -> onWidgetEmbedded",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
 
                 override fun onWidgetEmbedded() {
-
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Chat callback -> onWidgetEmbedded",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             },
 

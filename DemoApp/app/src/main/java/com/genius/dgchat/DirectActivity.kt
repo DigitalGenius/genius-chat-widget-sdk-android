@@ -39,6 +39,10 @@ class DirectActivity: AppCompatActivity() {
             override fun onChatProactiveButtonClick() {
             }
 
+            override fun onChatInitialisedError() {
+
+            }
+
         }
 
         methods = dgChatView.show()
