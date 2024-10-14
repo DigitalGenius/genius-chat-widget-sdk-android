@@ -11,8 +11,7 @@ buildscript {
 }
 
 // 2. Modify Plugins:
-plugins {
-    id 'com.android.library'
+plugins {id 'com.android.library'
     id 'maven-publish'          // << --- ADD This
 }
 

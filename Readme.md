@@ -60,54 +60,27 @@ Please see the `Integrating SDK to your project` section for details on how to i
             useCache = true, // optional
             crmPlatform = "your_crm", // optional
             crmVersion = "your_crm_version", // optional
-            callbacks = object : IDGChatWidgetListener {
+            callbacks = object : SimpleIDGChatWidgetListener {
                 override fun onChatMinimizeClick() {
-                    Toast.makeText(
-                        this@MainActivity,
-                        "User callback -> onChatMinimizeClick",
-                        Toast.LENGTH_LONG
-                    ).show()
                 }
 
                 override fun onChatEndClick() {
-                    Toast.makeText(
-                        this@MainActivity,
-                        "User callback -> onChatEndClick",
-                        Toast.LENGTH_LONG
-                    ).show()
                 }
 
                 override fun onChatLauncherClick() {
-                    Toast.makeText(
-                        this@MainActivity,
-                        "User callback -> onChatLauncherClick",
-                        Toast.LENGTH_LONG
-                    ).show()
                 }
 
                 override fun onChatProactiveButtonClick() {
-                    Toast.makeText(
-                        this@MainActivity,
-                        "User callback -> onChatProactiveButtonClick",
-                        Toast.LENGTH_LONG
-                    ).show()
                 }
 
                 override fun onCSATPopoverCloseClicked() {
-                    Toast.makeText(
-                        this@MainActivity,
-                        "User callback -> onCSATPopoverCloseClicked",
-                        Toast.LENGTH_LONG
-                    ).show()
                 }
 
                 override fun onChatInitialised() {
-                    Toast.makeText(
-                        this@MainActivity,
-                        "Chat callback -> onChatInitialised",
-                        Toast.LENGTH_LONG
-                    ).show()
                 }
+
+               override fun onChatInitialisedError() {
+               }
             },
         )
 ```
@@ -125,141 +98,94 @@ Methods ``show(animator: DGChatViewAnimator)`` and ``show()`` returned ``DGChatM
 ## Jetpack compose
 
 ```Kotlin
-   class MainActivity : ComponentActivity() {
-       override fun onCreate(savedInstanceState: Bundle?) {
-           super.onCreate(savedInstanceState)
-           DGChatSdk.init(
+    class MainActivity : ComponentActivity() { 
+        private var dgChatMethods:DGChatMethods? = null
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            DGChatSdk.init(
                widgetId = "your_widget_id",
                env = "your_env",
-               useCache = true,
-               configs = mapOf(
-                   Pair(
-                       "proactiveButtonsSettings", mapOf(
-                           Pair("isEnabled", true),
-                           Pair("questions", arrayOf("A", "B", "C")),
-                           Pair("answers", arrayOf("1", "2", "3")),
-                       )
-                   )
-               ), // optional
+               useCache = true, // optional
                crmPlatform = "your_crm", // optional
                crmVersion = "your_crm_version", // optional
-               callbacks = object : IDGChatWidgetListener {
-                   override fun onChatMinimizeClick() {
-                       Toast.makeText(
-                           this@MainActivity,
-                           "User callback -> onChatMinimizeClick",
-                           Toast.LENGTH_LONG
-                       ).show()
-                   }
+            )
+            setContent {
+               DGChatView(
+                   onDGChatCreated = { controller: DGChatViewController ->
+                       dgChatMethods = controller.showDGChatView()
+                   },
+                   chatWidgetListener = object : SimpleIDGChatWidgetListener {
+                       override fun onChatMinimizeClick() {
+                       }
    
-                   override fun onChatEndClick() {
-                       Toast.makeText(
-                           this@MainActivity,
-                           "User callback -> onChatEndClick",
-                           Toast.LENGTH_LONG
-                       ).show()
-                   }
+                       override fun onChatEndClick() {
+                       }
    
-                   override fun onChatLauncherClick() {
-                       Toast.makeText(
-                           this@MainActivity,
-                           "User callback -> onChatLauncherClick",
-                           Toast.LENGTH_LONG
-                       ).show()
-                   }
+                       override fun onChatLauncherClick() {
+                       }
    
-                   override fun onChatProactiveButtonClick() {
-                       Toast.makeText(
-                           this@MainActivity,
-                           "User callback -> onChatProactiveButtonClick",
-                           Toast.LENGTH_LONG
-                       ).show()
-                   }
+                       override fun onChatProactiveButtonClick() {
+                       }
    
-                   override fun onCSATPopoverCloseClicked() {
-                       Toast.makeText(
-                           this@MainActivity,
-                           "User callback -> onCSATPopoverCloseClicked",
-                           Toast.LENGTH_LONG
-                       ).show()
-                   }
+                       override fun onCSATPopoverCloseClicked() {
+                       }
    
-                   override fun onChatInitialised() {
-                       Toast.makeText(
-                           this@MainActivity,
-                           "Chat callback -> onChatInitialised",
-                           Toast.LENGTH_LONG
-                       ).show()
-                   }
-               },
-           )
-           attachDGChatViewToLifecycle()
+                       override fun onWidgetEmbedded() {
+                           dgChatMethods.launchWidget()
+                           dgChatMethods.sendMessage("your message")
+                       }
+                       override fun onChatInitialised() {
    
-           /*
-               ....
-            */
+                       }
    
-          val methods = showDGChatView()
-          methods.minimizeWidget()
-          methods.sendMessage("your message")
-          methods.launchWidget()
-          methods.initProactiveButtons(
-             listOf("question1", "question2", "question3"),
-             listOf("answer1", "answer2", "answer3")
-          )
-       }
-   }
+                       override fun onChatInitialisedError() {
+                       }
+                   },
+               ) 
+            }
+        }
+    }
 ```
+> Changes in v3.3:
+- You no longer need to call `attachDGChatViewToLifecycle()` in your activity's `onCreate()`.
+- Instead of using static functions like `showDGChatView()`, use a DGChatViewController instance:
+```Kotlin
+controller.showDGChatView()
+controller.showDGChatViewWith()
+controller.hideDGChatView()
+```
+
 ## Additional custom configs
 You can use config to customise your chat widget style. Eg: floating button position, proactive buttons
 
 ```Kotlin
    configs = mapOf(
-                Pair(
-                    "proactiveButtonsSettings", mapOf(
-                        Pair("isEnabled", true),
-                        Pair("questions", arrayOf("A", "B", "C")),
-                        Pair("answers", arrayOf("1", "2", "3")),
-                    )
-                ),
-                Pair("generalSettings", mapOf(Pair("isChatLauncherEnabled", true))),
-                Pair(
-                    "widgetPosition",
-                    mapOf(
-                        Pair(
-                            "mobile", mapOf(
-                                Pair(
-                                    "launcher", mapOf(
-                                        Pair("bottom", "10px"),
-                                        Pair("right", "10px")
-                                    )
-                                ),
-                                Pair(
-                                    "proactive", mapOf(
-                                        Pair("bottom", "90px"),
-                                        Pair("right", "20px")
-                                    )
-                                ),
-                                Pair(
-                                    "dialog", mapOf(
-                                        Pair("top", "0px"),
-                                        Pair("right", "0px"),
-                                        Pair("bottom", "0px"),
-                                        Pair("left", "0px"),
-                                    )
-                                )
-                            )
-                        )
-                    )
-                ),
-                Pair(
-                    "metadata",
-                    mapOf(
-                       Pair("currentPage", "some-random-string"),
-                       Pair("currentPageTitle", "another-random-string")
-                    )
-                ),
+      "proactiveButtonsSettings" to mapOf(
+         "isEnabled" to true,
+         "questions" to arrayOf("A", "B", "C"),
+         "answers" to arrayOf("1", "2", "3"),
+      ),
+   
+      "generalSettings" to mapOf("isChatLauncherEnabled" to true),
+      "widgetPosition" to mapOf(
+         "mobile" to mapOf(
+            "launcher" to mapOf(
+               "bottom" to "10px",
+               "right" to "10px",
             )
+         ),
+         "proactive" to mapOf(
+            "bottom" to "90px",
+            "right" to "20px",
+         ),
+         "dialog" to mapOf(
+            "top" to "0px",
+            "right" to "0px",
+            "bottom" to "0px",
+            "left" to "0px",
+         ),
+      ),
+   )
 
 ```
 
@@ -280,10 +206,10 @@ fun sendSystemMessage(payload: Map<String, Any>)
 ```
 For example:
 ```Kotlin
-sendSystemMessage(buildMap{
-    put("name", "auth_token")
-    put("payload", "your_jwt_token")
-})
+sendSystemMessage(mapOf(
+    "name" to "auth_token",
+    "payload" to "your_jwt_token",
+))
 ```
 The `launchWidget` method allows the customer to programmatically launch the widget:
 
@@ -337,32 +263,10 @@ class DirectActivity : AppCompatActivity() {
         )
 
         val dgChatView = findViewById<DGChatView>(R.id.straight_dgchatview)
-        dgChatView.chatWidgetListener = object : IDGChatWidgetListener {
-            override fun onChatInitialised() {
-            }
-
+        dgChatView.chatWidgetListener = object : SimpleIDGChatWidgetListener {
             override fun onWidgetEmbedded() {
-                // Must be run on main thread
-                runOnUiThread {
-                    methods?.launchWidget()
-                }
+                methods?.launchWidget()
             }
-
-            override fun onCSATPopoverCloseClicked() {
-            }
-
-            override fun onChatEndClick() {
-            }
-
-            override fun onChatLauncherClick() {
-            }
-
-            override fun onChatMinimizeClick() {
-            }
-
-            override fun onChatProactiveButtonClick() {
-            }
-
         }
 
         methods = dgChatView.show()

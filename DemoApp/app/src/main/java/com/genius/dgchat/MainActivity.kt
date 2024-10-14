@@ -94,42 +94,30 @@ class MainActivity : AppCompatActivity() {
                 }
             },
             configs = mapOf(
-                Pair(
-                    "proactiveButtonsSettings", mapOf(
-                        Pair("isEnabled", true),
-                        Pair("questions", arrayOf("A", "B", "C")),
-                        Pair("answers", arrayOf("1", "2", "3")),
-                    )
+                "proactiveButtonsSettings" to mapOf(
+                    "isEnabled" to true,
+                    "questions" to arrayOf("A", "B", "C"),
+                    "answers" to arrayOf("1", "2", "3"),
                 ),
-                Pair("generalSettings", mapOf(Pair("isChatLauncherEnabled", true))),
-                Pair(
-                    "widgetPosition",
-                    mapOf(
-                        Pair(
-                            "mobile", mapOf(
-                                Pair(
-                                    "launcher", mapOf(
-                                        Pair("bottom", "10px"),
-                                        Pair("right", "10px")
-                                    )
-                                ),
-                                Pair(
-                                    "proactive", mapOf(
-                                        Pair("bottom", "90px"),
-                                        Pair("right", "20px")
-                                    )
-                                ),
-                                Pair(
-                                    "dialog", mapOf(
-                                        Pair("top", "0px"),
-                                        Pair("right", "0px"),
-                                        Pair("bottom", "0px"),
-                                        Pair("left", "0px"),
-                                    )
-                                )
-                            )
+
+                "generalSettings" to mapOf("isChatLauncherEnabled" to true),
+                "widgetPosition" to mapOf(
+                    "mobile" to mapOf(
+                        "launcher" to mapOf(
+                            "bottom" to "10px",
+                            "right" to "10px",
                         )
-                    )
+                    ),
+                    "proactive" to mapOf(
+                        "bottom" to "90px",
+                        "right" to "20px",
+                    ),
+                    "dialog" to mapOf(
+                        "top" to "0px",
+                        "right" to "0px",
+                        "bottom" to "0px",
+                        "left" to "0px",
+                    ),
                 ),
             ),
         )

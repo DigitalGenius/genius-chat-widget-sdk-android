@@ -10,7 +10,6 @@ class StraightActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_straight)
 
-        var methods: DGChatMethods? = null
         val dgChatView = findViewById<DGChatView>(R.id.straight_dgchatview)
 
         dgChatView.show()
