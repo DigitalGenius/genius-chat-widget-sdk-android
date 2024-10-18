@@ -22,6 +22,7 @@ $dokka.location:com.digitalgenius.chatwidgetsdk.interactions/DGChatViewAnimator/
 $dokka.location:com.digitalgenius.chatwidgetsdk.interactions/DGChatViewAnimator/onAnimationFinished/#android.view.View/PointingToDeclaration/chatwidgetsdk/com.digitalgenius.chatwidgetsdk.interactions/-d-g-chat-view-animator/on-animation-finished.html
 $dokka.location:com.digitalgenius.chatwidgetsdk.interactions/DGChatViewAnimator/onAnimationStarted/#android.view.View/PointingToDeclaration/chatwidgetsdk/com.digitalgenius.chatwidgetsdk.interactions/-d-g-chat-view-animator/on-animation-started.html
 $dokka.location:com.digitalgenius.chatwidgetsdk.interactions/IDGChatWidgetListener///PointingToDeclaration/chatwidgetsdk/com.digitalgenius.chatwidgetsdk.interactions/-i-d-g-chat-widget-listener/index.html
+$dokka.location:com.digitalgenius.chatwidgetsdk.interactions/IDGChatWidgetListener/newConversationStarted/#/PointingToDeclaration/chatwidgetsdk/com.digitalgenius.chatwidgetsdk.interactions/-i-d-g-chat-widget-listener/new-conversation-started.html
 $dokka.location:com.digitalgenius.chatwidgetsdk.interactions/IDGChatWidgetListener/onCSATPopoverCloseClicked/#/PointingToDeclaration/chatwidgetsdk/com.digitalgenius.chatwidgetsdk.interactions/-i-d-g-chat-widget-listener/on-c-s-a-t-popover-close-clicked.html
 $dokka.location:com.digitalgenius.chatwidgetsdk.interactions/IDGChatWidgetListener/onChatEndClick/#/PointingToDeclaration/chatwidgetsdk/com.digitalgenius.chatwidgetsdk.interactions/-i-d-g-chat-widget-listener/on-chat-end-click.html
 $dokka.location:com.digitalgenius.chatwidgetsdk.interactions/IDGChatWidgetListener/onChatInitialised/#/PointingToDeclaration/chatwidgetsdk/com.digitalgenius.chatwidgetsdk.interactions/-i-d-g-chat-widget-listener/on-chat-initialised.html
@@ -35,6 +36,7 @@ $dokka.location:com.digitalgenius.chatwidgetsdk.interactions/PageProgressListene
 $dokka.location:com.digitalgenius.chatwidgetsdk.interactions/PageProgressListener/onPageStarted/#/PointingToDeclaration/chatwidgetsdk/com.digitalgenius.chatwidgetsdk.interactions/-page-progress-listener/on-page-started.html
 $dokka.location:com.digitalgenius.chatwidgetsdk.interactions/SimpleIDGChatWidgetListener///PointingToDeclaration/chatwidgetsdk/com.digitalgenius.chatwidgetsdk.interactions/-simple-i-d-g-chat-widget-listener/index.html
 $dokka.location:com.digitalgenius.chatwidgetsdk.interactions/SimpleIDGChatWidgetListener/SimpleIDGChatWidgetListener/#/PointingToDeclaration/chatwidgetsdk/com.digitalgenius.chatwidgetsdk.interactions/-simple-i-d-g-chat-widget-listener/-simple-i-d-g-chat-widget-listener.html
+$dokka.location:com.digitalgenius.chatwidgetsdk.interactions/SimpleIDGChatWidgetListener/newConversationStarted/#/PointingToDeclaration/chatwidgetsdk/com.digitalgenius.chatwidgetsdk.interactions/-simple-i-d-g-chat-widget-listener/new-conversation-started.html
 $dokka.location:com.digitalgenius.chatwidgetsdk.interactions/SimpleIDGChatWidgetListener/onCSATPopoverCloseClicked/#/PointingToDeclaration/chatwidgetsdk/com.digitalgenius.chatwidgetsdk.interactions/-simple-i-d-g-chat-widget-listener/on-c-s-a-t-popover-close-clicked.html
 $dokka.location:com.digitalgenius.chatwidgetsdk.interactions/SimpleIDGChatWidgetListener/onChatEndClick/#/PointingToDeclaration/chatwidgetsdk/com.digitalgenius.chatwidgetsdk.interactions/-simple-i-d-g-chat-widget-listener/on-chat-end-click.html
 $dokka.location:com.digitalgenius.chatwidgetsdk.interactions/SimpleIDGChatWidgetListener/onChatInitialised/#/PointingToDeclaration/chatwidgetsdk/com.digitalgenius.chatwidgetsdk.interactions/-simple-i-d-g-chat-widget-listener/on-chat-initialised.html
@@ -83,6 +85,7 @@ $dokka.location:com.digitalgenius.chatwidgetsdk.ui/DGChatView/show/#com.digitalg
 $dokka.location:com.digitalgenius.chatwidgetsdk////PointingToDeclaration/chatwidgetsdk/com.digitalgenius.chatwidgetsdk/index.html
 $dokka.location:com.digitalgenius.chatwidgetsdk/DGChatSdk///PointingToDeclaration/chatwidgetsdk/com.digitalgenius.chatwidgetsdk/-d-g-chat-sdk/index.html
 $dokka.location:com.digitalgenius.chatwidgetsdk/DGChatSdk/init/#kotlin.String#kotlin.String#kotlin.Boolean#com.digitalgenius.chatwidgetsdk.interactions.IDGChatWidgetListener?#kotlin.String?#kotlin.String?#kotlin.collections.Map[kotlin.String,kotlin.Any]/PointingToDeclaration/chatwidgetsdk/com.digitalgenius.chatwidgetsdk/-d-g-chat-sdk/init.html
+$dokka.location:com.digitalgenius.chatwidgetsdk/DGChatSdk/resetChat/#android.content.Context/PointingToDeclaration/chatwidgetsdk/com.digitalgenius.chatwidgetsdk/-d-g-chat-sdk/reset-chat.html
 com.digitalgenius.chatwidgetsdk
 com.digitalgenius.chatwidgetsdk.interactions
 com.digitalgenius.chatwidgetsdk.react
