@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.digitalgenius.chatwidgetsdk.DGChatSdk
 import com.digitalgenius.chatwidgetsdk.interactions.IDGChatWidgetListener
+import com.digitalgenius.chatwidgetsdk.interactions.SimpleIDGChatWidgetListener
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             "f0c07546-af4c-4963-9e23-3e9343eaf13b",
             "dev.us",
             true,
-            callbacks = object : IDGChatWidgetListener {
+            callbacks = object : SimpleIDGChatWidgetListener() {
                 override fun onChatMinimizeClick() {
                     Toast.makeText(
                         this@MainActivity,
@@ -79,18 +80,6 @@ class MainActivity : AppCompatActivity() {
                         "User callback -> onChatProactiveButtonClick",
                         Toast.LENGTH_LONG
                     ).show()
-                }
-
-                override fun onWidgetEmbedded() {
-
-                }
-
-                override fun onChatInitialised() {
-
-                }
-
-                override fun onChatInitialisedError() {
-
                 }
             },
             configs = mapOf(

@@ -35,6 +35,12 @@
             android:layout_height="wrap_content"
             android:text="Send text message" />
 
+        <Button
+            android:id="@+id/embedded_reset_chat"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Reset chat" />
+
     </LinearLayout>
 
     <com.digitalgenius.chatwidgetsdk.ui.DGChatView

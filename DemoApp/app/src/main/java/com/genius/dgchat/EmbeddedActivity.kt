@@ -3,7 +3,10 @@ package com.genius.dgchat
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.digitalgenius.chatwidgetsdk.DGChatSdk
 import com.digitalgenius.chatwidgetsdk.interactions.DGChatMethods
+import com.digitalgenius.chatwidgetsdk.interactions.IDGChatWidgetListener
+import com.digitalgenius.chatwidgetsdk.interactions.SimpleIDGChatWidgetListener
 import com.digitalgenius.chatwidgetsdk.ui.DGChatView
 
 class EmbeddedActivity : AppCompatActivity() {
@@ -23,6 +26,9 @@ class EmbeddedActivity : AppCompatActivity() {
         }
         findViewById<Button>(R.id.embedded_send_txt_msg).setOnClickListener {
             methods?.sendMessage("Test message")
+        }
+        findViewById<Button>(R.id.embedded_reset_chat).setOnClickListener {
+            DGChatSdk.resetChat(applicationContext)
         }
     }
 }
