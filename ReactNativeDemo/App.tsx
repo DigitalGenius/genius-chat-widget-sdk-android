@@ -72,36 +72,51 @@ function App(): JSX.Element {
 useEffect(() => {
     const eventEmitter = new NativeEventEmitter(NativeModules.DGChatModule);
     let onChatMinimizeClickEventListener = eventEmitter.addListener('OnChatMinimizeClick', event => {
-      DGChatModule.showToast("OnChatMinimizeClick")
+      
     });
     let onChatEndClickEventListener = eventEmitter.addListener('onChatEndClick', event => {
-      DGChatModule.showToast("onChatEndClick")
+     
     });
     let onChatLauncherClickEventListener = eventEmitter.addListener('onChatLauncherClick', event => {
-      DGChatModule.showToast("onChatLauncherClick")
+      
     });
     let onChatProactiveButtonClickEventListener = eventEmitter.addListener('onChatProactiveButtonClick', event => {
-      DGChatModule.showToast("onChatProactiveButtonClick")
+    });
+
+    let onWidgetEmbedded = eventEmitter.addListener('onWidgetEmbedded', event => {
+      DGChatModule.launchWidget();
+    });
+    let onChatInitialised = eventEmitter.addListener('onChatInitialised', event => {
+      
+    });
+    let onChatInitialisedError = eventEmitter.addListener('onChatInitialisedError', event => {
+      
+    });
+    let newConversationStarted = eventEmitter.addListener('newConversationStarted', event => {
+      
     });
 
 
     return () => {
       onChatMinimizeClickEventListener.remove(); 
-	onChatEndClickEventListener.remove(); 
-	onChatLauncherClickEventListener.remove(); 
-	onChatProactiveButtonClickEventListener.remove(); 
+	    onChatEndClickEventListener.remove(); 
+	    onChatLauncherClickEventListener.remove(); 
+	    onChatProactiveButtonClickEventListener.remove(); 
+	    onWidgetEmbedded.remove(); 
+	    onChatInitialised.remove(); 
+	    onChatInitialisedError.remove(); 
+	    newConversationStarted.remove(); 
     };
   }, []
 );
 
-
-    DGChatModule.showDGChatView(
-	"f08c2308-b8f9-4390-af00-da1724862787", 
-	"https://flow-server.eu.dgdeepai.com", 
-	true, 
-	"metadata: { \"currentPage\": \"some-random-string\", \"currentPageTitle\": \"another-random-string\"}"
-    );
-
+DGChatModule.showDGChatView(
+  "f0c07546-af4c-4963-9e23-3e9343eaf13b",
+  "dev.us",
+  {"generalSettings":{ "isChatLauncherEnabled" : true}, "locale" : "en-US"},
+  null,
+  null,
+);
 
 
   return (
