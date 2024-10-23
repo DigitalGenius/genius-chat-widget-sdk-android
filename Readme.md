@@ -356,11 +356,12 @@ Project UI root activity is MainActivity which contains buttons reference to oth
     ```Groovy
     dependencies {
         implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
-        implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
-        implementation("androidx.compose.runtime:runtime:1.4.3")
+        implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
+        implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+        implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.21"))
     }
     ```
-3. Put `DGChatSDK.aar` into your `project/android/app/libs` folder.
+3. Put `chatwidgetsdk.aar` into your `project/android/app/libs` folder.
 4. Click `Sync Project with Gradle files` in Android Studio
 
 ## Basic usage example
@@ -398,56 +399,60 @@ const {DGChatModule} = NativeModules;
 ...
 useEffect(() => {
     const eventEmitter = new NativeEventEmitter(NativeModules.DGChatModule);
-    let onWidgetEmbeddedEventListener = eventEmitter.addListener('onWidgetEmbedded', event => {
-      DGChatModule.showToast("onWidgetEmbedded")
-    });
-    let onChatInitialisedEventListener = eventEmitter.addListener('onChatInitialised', event => {
-      DGChatModule.showToast("onChatInitialised")
-    });
-    let onChatMinimizeClickEventListener = eventEmitter.addListener('onChatMinimizeClick', event => {
-      DGChatModule.showToast("onChatMinimizeClick")
+    let onChatMinimizeClickEventListener = eventEmitter.addListener('OnChatMinimizeClick', event => {
+      
     });
     let onChatEndClickEventListener = eventEmitter.addListener('onChatEndClick', event => {
-      DGChatModule.showToast("onChatEndClick")
+     
     });
     let onChatLauncherClickEventListener = eventEmitter.addListener('onChatLauncherClick', event => {
-      DGChatModule.showToast("onChatLauncherClick")
+      
     });
     let onChatProactiveButtonClickEventListener = eventEmitter.addListener('onChatProactiveButtonClick', event => {
-      DGChatModule.showToast("onChatProactiveButtonClick")
-    });
-    let onCSATPopoverCloseClickedEventListener = eventEmitter.addListener('onCSATPopoverCloseClicked', event => {
-      DGChatModule.showToast("onCSATPopoverCloseClicked")
+      
     });
 
+    let onWidgetEmbedded = eventEmitter.addListener('onWidgetEmbedded', event => {
+     
+    });
+    let onChatInitialised = eventEmitter.addListener('onChatInitialised', event => {
+      
+    });
+    let onChatInitialisedError = eventEmitter.addListener('onChatInitialisedError', event => {
+      
+    });
+    let newConversationStarted = eventEmitter.addListener('newConversationStarted', event => {
+      
+    });
 
     return () => {
-      onWidgetEmbeddedEventListener.remove(); 
-      onChatInitialisedEventListener.remove(); 
       onChatMinimizeClickEventListener.remove(); 
 	  onChatEndClickEventListener.remove(); 
 	  onChatLauncherClickEventListener.remove(); 
-	  onChatProactiveButtonClickEventListener.remove();
-	  onCSATPopoverCloseClickedEventListener.remove();
+	  onChatProactiveButtonClickEventListener.remove(); 
+	  onWidgetEmbedded.remove(); 
+	  onChatInitialised.remove(); 
+	  onChatInitialisedError.remove(); 
+	  newConversationStarted.remove(); 
     };
   }, []
 );
 ...
-    DGChatModule.showDGChatView(
-       "your_widget_id",
-       "your_env",
-       true, 
-       crmPlatform, // optional
-       crmVersion, // optional
-    );
+   DGChatModule.showDGChatView(
+     "your_widget_id",
+     "your_env",
+     customConfigs, // optional
+     crmPlatform, // optional
+     crmVersion, // optional
+   );
 ...
 
-       DGChatModule.sendMessage("your message")
-       DGChatModule.launchWidget()
-       DGChatModule.initProactiveButtons(
-          ["question1", "question2", "question3"],
-          ["answer1", "answer2", "answer3"]
-       )
+   DGChatModule.sendMessage("your message")
+   DGChatModule.launchWidget()
+   DGChatModule.initProactiveButtons(
+      ["question1", "question2", "question3"],
+      ["answer1", "answer2", "answer3"]
+   )
 ...
 ```
 
