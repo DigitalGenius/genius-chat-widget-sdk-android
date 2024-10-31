@@ -1,15 +1,14 @@
-# ``DGChatSDK``
-
-<div align="center">
-   <img width="600px" src="./docs/images/logo-dark-dg.svg" alt="Logo">
-</div>
-
-<!--![DigitalGeniusLogo](logo-dark.svg)-->
+# DGChatSDK
 
 Android SDK for DigitalGenius Chat.
 
+### Requirements
+
+- Android Studio Electric Eel (2022.1.1) or later
+
 ## Overview
 This SDK enables the DigitalGenius Chat Widget to be embedded anywhere inside an Android app.
+
 The SDK requires minimal setup. Please see the `PublicDemoApp.zip` for an example.
 
 A DigitalGenius Customer Success Manager will provide you with a custom `widgetId`, `env` and `version` before getting started.
@@ -82,7 +81,10 @@ Please see the `Integrating SDK to your project` section for details on how to i
                override fun onChatInitialisedError() {
                }
             },
-        )
+  	    configs = mapOf(
+      		"generalSettings" to mapOf("isChatLauncherEnabled" to true)
+        	),
+	)
 ```
 3. Show chat widget
 ```Kotlin
