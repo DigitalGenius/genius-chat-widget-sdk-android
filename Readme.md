@@ -209,8 +209,8 @@ fun sendSystemMessage(payload: Map<String, Any>)
 For example:
 ```Kotlin
 sendSystemMessage(mapOf(
-    "name" to "auth_token",
-    "payload" to "your_jwt_token",
+    "message" to "special message",
+    "payload" to "some data",
 ))
 ```
 The `launchWidget` method allows the customer to programmatically launch the widget:
@@ -276,6 +276,29 @@ class DirectActivity : AppCompatActivity() {
 }
 ```
 
+## Authenticating Users
+### Generating JWT
+Please follow the instruction in this [link](https://docs.digitalgenius.com/docs/passing-authenticated-user-data) to generate authentication token
+### Passing the token to the chat widget
+Once you have generated the jwt you can pass it to the chat widget as an input via the chat widget config defined when you init the chat:
+```Kotlin
+        DGChatSdk.init(
+            widgetId = "your_widget_id",
+            env = "your_env",
+            ...
+            ,
+  	    configs = mapOf(
+      		"metadata" to mapOf("auth_token" to "YOUR_AUTH_TOKEN")
+        	),
+	)
+```
+If your token is short lived it is possible to send updated tokens by sending a system message like so:
+```Kotlin
+sendSystemMessage(mapOf(
+    "name" to "auth_token",
+    "payload" to "YOUR_AUTH_TOKEN",
+))
+```
 # Full screen support
 There are two methods to display your chat in full-screen mode:
 ### 1. Customize Activity Styles via xml config
