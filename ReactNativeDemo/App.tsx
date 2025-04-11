@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import type {PropsWithChildren} from 'react';
+import type { PropsWithChildren } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -29,12 +29,12 @@ type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
-import {useEffect, useState} from 'react';
-import {NativeEventEmitter, NativeModules} from 'react-native';
-const {DGChatModule} = NativeModules;
+import { useEffect, useState } from 'react';
+import { NativeEventEmitter, NativeModules } from 'react-native';
+const { DGChatModule } = NativeModules;
 
 
-function Section({children, title}: SectionProps): JSX.Element {
+function Section({ children, title }: SectionProps): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
@@ -64,21 +64,22 @@ function Section({children, title}: SectionProps): JSX.Element {
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+  console.log('123');
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-useEffect(() => {
+  useEffect(() => {
     const eventEmitter = new NativeEventEmitter(NativeModules.DGChatModule);
     let onChatMinimizeClickEventListener = eventEmitter.addListener('OnChatMinimizeClick', event => {
-      
+
     });
     let onChatEndClickEventListener = eventEmitter.addListener('onChatEndClick', event => {
-     
+
     });
     let onChatLauncherClickEventListener = eventEmitter.addListener('onChatLauncherClick', event => {
-      
+
     });
     let onChatProactiveButtonClickEventListener = eventEmitter.addListener('onChatProactiveButtonClick', event => {
     });
@@ -87,36 +88,36 @@ useEffect(() => {
       DGChatModule.launchWidget();
     });
     let onChatInitialised = eventEmitter.addListener('onChatInitialised', event => {
-      
+
     });
     let onChatInitialisedError = eventEmitter.addListener('onChatInitialisedError', event => {
-      
+
     });
     let newConversationStarted = eventEmitter.addListener('newConversationStarted', event => {
-      
+
     });
 
 
     return () => {
-      onChatMinimizeClickEventListener.remove(); 
-	    onChatEndClickEventListener.remove(); 
-	    onChatLauncherClickEventListener.remove(); 
-	    onChatProactiveButtonClickEventListener.remove(); 
-	    onWidgetEmbedded.remove(); 
-	    onChatInitialised.remove(); 
-	    onChatInitialisedError.remove(); 
-	    newConversationStarted.remove(); 
+      onChatMinimizeClickEventListener.remove();
+      onChatEndClickEventListener.remove();
+      onChatLauncherClickEventListener.remove();
+      onChatProactiveButtonClickEventListener.remove();
+      onWidgetEmbedded.remove();
+      onChatInitialised.remove();
+      onChatInitialisedError.remove();
+      newConversationStarted.remove();
     };
   }, []
-);
+  );
 
-DGChatModule.showDGChatView(
-  "f0c07546-af4c-4963-9e23-3e9343eaf13b",
-  "dev.us",
-  {"generalSettings":{ "isChatLauncherEnabled" : true}, "locale" : "en-US"},
-  null,
-  null,
-);
+  DGChatModule.showDGChatView(
+    "f0c07546-af4c-4963-9e23-3e9343eaf13b",
+    "dev.us",
+    { "generalSettings": { "isChatLauncherEnabled": true }, "locale": "en-US" },
+    null,
+    null,
+  );
 
 
   return (
